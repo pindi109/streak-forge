@@ -1,111 +1,169 @@
-import 'package:flutter/foundation.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
+
 import '../services/auth_service.dart';
 
-class AppAuthProvider extends ChangeNotifier {
+enum AuthStatus { initial, loading, authenticated, unauthenticated, error }
+
+class AuthProvider extends ChangeNotifier {
   final AuthService _authService = AuthService();
 
-  User? _user;
-  bool _isLoading = true;
-  String? _error;
+  AuthStatus _status       = AuthStatus.initial;
+  User?      _user;
+  String?    _errorMessage;
+  bool       _isLoading    = false;
 
-  User? get user => _user;
-  bool get isLoading => _isLoading;
-  String? get error => _error;
-  bool get isAuthenticated => _user != null;
+  // ── Getters ───────────────────────────────────────────────────────────────────
 
-  AppAuthProvider() {
+  AuthStatus get status       => _status;
+  User?      get user         => _user;
+  String?    get errorMessage => _errorMessage;
+  bool       get isLoading    => _isLoading;
+  bool       get isAuthenticated => _status == AuthStatus.authenticated;
+
+  // ── Lifecycle ─────────────────────────────────────────────────────────────────
+
+  AuthProvider() {
     _init();
   }
 
   void _init() {
-    _authService.authStateChanges.listen((User? user) {
-      _user = user;
-      _isLoading = false;
-      notifyListeners();
-    });
+    _authService.authStateChanges.listen(_onAuthStateChanged);
   }
 
-  Future<bool> signInWithEmail(String email, String password) async {
-    _setLoading(true);
-    _clearError();
+  void _onAuthStateChanged(User? user) {
+    _user = user;
+    _status = user != null
+        ? AuthStatus.authenticated
+        : AuthStatus.unauthenticated;
+    notifyListeners();
+  }
+
+  // ── Helpers ───────────────────────────────────────────────────────────────────
+
+  void _setLoading(bool loading) {
+    _isLoading = loading;
+    notifyListeners();
+  }
+
+  void _setError(String? message) {
+    _errorMessage = message;
+    _status = message != null ? AuthStatus.error : _status;
+    notifyListeners();
+  }
+
+  void clearError() {
+    _errorMessage = null;
+    notifyListeners();
+  }
+
+  // ── Auth Actions ──────────────────────────────────────────────────────────────
+
+  Future<void> signInWithEmail({
+    required String email,
+    required String password,
+  }) async {
     try {
-      await _authService.signInWithEmailAndPassword(email, password);
-      return true;
+      _setLoading(true);
+      _setError(null);
+      final user = await _authService.signInWithEmail(
+        email: email,
+        password: password,
+      );
+      _user   = user;
+      _status = user != null
+          ? AuthStatus.authenticated
+          : AuthStatus.unauthenticated;
     } catch (e) {
-      _error = e.toString();
-      notifyListeners();
-      return false;
+      _setError(e.toString());
     } finally {
       _setLoading(false);
     }
   }
 
-  Future<bool> registerWithEmail(
-      String email, String password, String displayName) async {
-    _setLoading(true);
-    _clearError();
+  Future<void> registerWithEmail({
+    required String email,
+    required String password,
+    required String displayName,
+  }) async {
     try {
-      await _authService.registerWithEmailAndPassword(
-          email, password, displayName);
-      return true;
+      _setLoading(true);
+      _setError(null);
+      final user = await _authService.registerWithEmail(
+        email: email,
+        password: password,
+        displayName: displayName,
+      );
+      _user   = user;
+      _status = user != null
+          ? AuthStatus.authenticated
+          : AuthStatus.unauthenticated;
     } catch (e) {
-      _error = e.toString();
-      notifyListeners();
-      return false;
+      _setError(e.toString());
     } finally {
       _setLoading(false);
     }
   }
 
-  Future<bool> signInWithGoogle() async {
-    _setLoading(true);
-    _clearError();
+  Future<void> signInWithGoogle() async {
     try {
-      final result = await _authService.signInWithGoogle();
-      return result != null;
+      _setLoading(true);
+      _setError(null);
+      final user = await _authService.signInWithGoogle();
+      _user   = user;
+      _status = user != null
+          ? AuthStatus.authenticated
+          : AuthStatus.unauthenticated;
     } catch (e) {
-      _error = e.toString();
-      notifyListeners();
-      return false;
+      _setError(e.toString());
     } finally {
       _setLoading(false);
     }
   }
 
   Future<void> signOut() async {
-    _clearError();
     try {
+      _setLoading(true);
+      _setError(null);
       await _authService.signOut();
+      _user   = null;
+      _status = AuthStatus.unauthenticated;
     } catch (e) {
-      _error = e.toString();
-      notifyListeners();
+      _setError(e.toString());
+    } finally {
+      _setLoading(false);
     }
   }
 
-  Future<bool> sendPasswordResetEmail(String email) async {
-    _clearError();
+  Future<void> sendPasswordResetEmail(String email) async {
     try {
+      _setLoading(true);
+      _setError(null);
       await _authService.sendPasswordResetEmail(email);
-      return true;
     } catch (e) {
-      _error = e.toString();
-      notifyListeners();
-      return false;
+      _setError(e.toString());
+    } finally {
+      _setLoading(false);
     }
   }
 
-  void _setLoading(bool val) {
-    _isLoading = val;
-    notifyListeners();
+  Future<void> deleteAccount() async {
+    try {
+      _setLoading(true);
+      _setError(null);
+      await _authService.deleteAccount();
+      _user   = null;
+      _status = AuthStatus.unauthenticated;
+    } catch (e) {
+      _setError(e.toString());
+    } finally {
+      _setLoading(false);
+    }
   }
 
-  void _clearError() {
-    _error = null;
-  }
-
-  void clearError() {
-    _clearError();
-    notifyListeners();
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

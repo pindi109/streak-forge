@@ -1,334 +1,296 @@
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:fl_chart/fl_chart.dart';
 import '../models/habit_model.dart';
-import '../providers/habit_provider.dart';
-import '../../../core/theme/app_theme.dart';
-import '../../../core/utils/date_utils.dart';
-import '../../../core/utils/streak_calculator.dart';
-import 'edit_habit_screen.dart';
+import '../providers/habits_provider.dart';
+import '../widgets/habit_calendar.dart';
+import '../widgets/habit_stats_row.dart';
+import 'add_habit_screen.dart';
 
-class HabitDetailScreen extends StatelessWidget {
+class HabitDetailScreen extends StatefulWidget {
   final HabitModel habit;
+
   const HabitDetailScreen({super.key, required this.habit});
 
   @override
-  Widget build(BuildContext context) {
-    final habitProvider = context.watch<HabitProvider>();
-    final currentHabit =
-        habitProvider.getHabitById(habit.id) ?? habit;
+  State<HabitDetailScreen> createState() => _HabitDetailScreenState();
+}
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(currentHabit.emoji + ' ' + currentHabit.title),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, size: 18),
-          onPressed: () => Navigator.pop(context),
+class _HabitDetailScreenState extends State<HabitDetailScreen> {
+  HabitModel get _habit {
+    final provider = context.read<HabitsProvider>();
+    return provider.habits.firstWhere(
+      (h) => h.id == widget.habit.id,
+      orElse: () => widget.habit,
+    );
+  }
+
+  Color get _color {
+    try {
+      return Color(
+          int.parse(_habit.colorHex.replaceFirst('#', '0xFF')));
+    } catch (_) {
+      return const Color(0xFF7C3AED);
+    }
+  }
+
+  Future<void> _deleteHabit() async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: const Color(0xFF18181B),
+        title: const Text('Delete Habit',
+            style: TextStyle(color: Colors.white)),
+        content: Text(
+          'Are you sure you want to delete "${_habit.title}"? This action cannot be undone.',
+          style: const TextStyle(color: Color(0xFFA1A1AA)),
         ),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.edit_outlined, size: 20),
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (_) => EditHabitScreen(habit: currentHabit)),
-            ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Cancel',
+                style: TextStyle(color: Color(0xFFA1A1AA))),
           ),
-          IconButton(
-            icon: const Icon(Icons.delete_outline, size: 20, color: AppTheme.error),
-            onPressed: () => _confirmDelete(context, habitProvider),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('Delete',
+                style: TextStyle(color: Colors.red)),
           ),
         ],
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 16),
-              _buildStatsRow(currentHabit),
-              const SizedBox(height: 24),
-              _buildWeekCalendar(currentHabit),
-              const SizedBox(height: 24),
-              _buildBarChart(currentHabit),
-              const SizedBox(height: 24),
-              _buildDetails(currentHabit),
-              const SizedBox(height: 40),
-            ],
-          ),
-        ),
-      ),
     );
+
+    if (confirmed == true && mounted) {
+      await context.read<HabitsProvider>().deleteHabit(_habit.id);
+      if (mounted) Navigator.pop(context);
+    }
   }
 
-  Widget _buildStatsRow(HabitModel habit) {
-    final totalDays =
-        DateTime.now().difference(habit.createdAt).inDays + 1;
-    final rate =
-        StreakCalculator.calculateCompletionRate(habit.completedDates, totalDays);
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<HabitsProvider>(
+      builder: (context, provider, _) {
+        final habit = provider.habits.firstWhere(
+          (h) => h.id == widget.habit.id,
+          orElse: () => widget.habit,
+        );
+        final color = Color(
+          int.parse(habit.colorHex.replaceFirst('#', '0xFF')));
 
-    return Row(
-      children: [
-        Expanded(
-            child: _statCard('Current\nStreak', '${habit.currentStreak}🔥',
-                AppTheme.warning)),
-        const SizedBox(width: 12),
-        Expanded(
-            child: _statCard(
-                'Longest\nStreak', '${habit.longestStreak}', AppTheme.primary)),
-        const SizedBox(width: 12),
-        Expanded(
-            child: _statCard('Completion\nRate',
-                '${(rate * 100).toStringAsFixed(0)}%', AppTheme.success)),
-        const SizedBox(width: 12),
-        Expanded(
-            child: _statCard('Total\nDone', '${habit.totalCompletions}',
-                AppTheme.gradientEnd)),
-      ],
-    );
-  }
-
-  Widget _statCard(String label, String value, Color color) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: AppTheme.surface,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppTheme.border),
-      ),
-      child: Column(
-        children: [
-          Text(value,
-              style: TextStyle(
-                  color: color,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700),
-              textAlign: TextAlign.center),
-          const SizedBox(height: 4),
-          Text(label,
-              style: const TextStyle(
-                  color: AppTheme.textSecondary, fontSize: 10),
-              textAlign: TextAlign.center),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildWeekCalendar(HabitModel habit) {
-    final days = AppDateUtils.getLast7Days();
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text('This Week',
-            style: TextStyle(
-                color: AppTheme.textPrimary,
-                fontSize: 16,
-                fontWeight: FontWeight.w600)),
-        const SizedBox(height: 12),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: days.map((day) {
-            final isCompleted =
-                StreakCalculator.isCompletedOnDate(habit.completedDates, day);
-            final isToday = AppDateUtils.isToday(day);
-            return Column(
-              children: [
-                Text(
-                  AppDateUtils.formatDayOfWeek(day),
-                  style: TextStyle(
-                    color: isToday
-                        ? AppTheme.primary
-                        : AppTheme.textSecondary,
-                    fontSize: 11,
-                    fontWeight: FontWeight.w600,
-                  ),
+        return Scaffold(
+          backgroundColor: const Color(0xFF0A0A0F),
+          body: CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                expandedHeight: 200,
+                pinned: true,
+                backgroundColor: const Color(0xFF0A0A0F),
+                leading: IconButton(
+                  icon: const Icon(Icons.arrow_back_ios,
+                      color: Colors.white, size: 20),
+                  onPressed: () => Navigator.pop(context),
                 ),
-                const SizedBox(height: 6),
-                AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  width: 36,
-                  height: 36,
-                  decoration: BoxDecoration(
-                    color: isCompleted
-                        ? AppTheme.primary
-                        : AppTheme.surface,
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: isToday
-                          ? AppTheme.primary
-                          : AppTheme.border,
-                      width: isToday ? 2 : 1,
+                actions: [
+                  IconButton(
+                    icon: const Icon(Icons.edit_outlined, color: Colors.white),
+                    onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) =>
+                            AddHabitScreen(existingHabit: habit),
+                      ),
                     ),
                   ),
-                  child: Center(
-                    child: isCompleted
-                        ? const Icon(Icons.check,
-                            color: Colors.white, size: 16)
-                        : Text(
-                            '${day.day}',
-                            style: TextStyle(
-                              color: isToday
-                                  ? AppTheme.primary
-                                  : AppTheme.textSecondary,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
+                  IconButton(
+                    icon:
+                        const Icon(Icons.delete_outline, color: Colors.red),
+                    onPressed: _deleteHabit,
+                  ),
+                ],
+                flexibleSpace: FlexibleSpaceBar(
+                  background: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          color.withOpacity(0.3),
+                          const Color(0xFF0A0A0F),
+                        ],
+                      ),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const SizedBox(height: 60),
+                        Text(
+                          habit.emoji,
+                          style: const TextStyle(fontSize: 56),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          habit.title,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        if (habit.description.isNotEmpty)
+                          Padding(
+                            padding: const EdgeInsets.only(top: 4),
+                            child: Text(
+                              habit.description,
+                              style: const TextStyle(
+                                color: Color(0xFFA1A1AA),
+                                fontSize: 13,
+                              ),
                             ),
                           ),
+                      ],
+                    ),
                   ),
                 ),
-              ],
-            );
-          }).toList(),
+              ),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildStreakHero(habit, color),
+                      const SizedBox(height: 24),
+                      HabitStatsRow(habit: habit),
+                      const SizedBox(height: 24),
+                      const Text(
+                        'Progress Calendar',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      HabitCalendar(habit: habit, accentColor: color),
+                      const SizedBox(height: 24),
+                      _buildTodayButton(habit, provider),
+                      const SizedBox(height: 40),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildStreakHero(HabitModel habit, Color color) {
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: const Color(0xFF18181B),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: color.withOpacity(0.3), width: 1.5),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          _streakItem(
+            '${habit.currentStreak}',
+            'Current\nStreak',
+            Icons.local_fire_department,
+            const Color(0xFFF97316),
+          ),
+          Container(width: 1, height: 50, color: const Color(0xFF27272A)),
+          _streakItem(
+            '${habit.longestStreak}',
+            'Longest\nStreak',
+            Icons.emoji_events,
+            const Color(0xFFFBBF24),
+          ),
+          Container(width: 1, height: 50, color: const Color(0xFF27272A)),
+          _streakItem(
+            '${habit.completedDates.length}',
+            'Total\nDays',
+            Icons.check_circle,
+            const Color(0xFF22C55E),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _streakItem(
+      String value, String label, IconData icon, Color iconColor) {
+    return Column(
+      children: [
+        Icon(icon, color: iconColor, size: 24),
+        const SizedBox(height: 6),
+        Text(
+          value,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 26,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 2),
+        Text(
+          label,
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            color: Color(0xFFA1A1AA),
+            fontSize: 11,
+          ),
         ),
       ],
     );
   }
 
-  Widget _buildBarChart(HabitModel habit) {
-    final days = AppDateUtils.getLast30Days();
-    final barGroups = <BarChartGroupData>[];
-
-    for (int i = 0; i < days.length; i++) {
-      final isCompleted =
-          StreakCalculator.isCompletedOnDate(habit.completedDates, days[i]);
-      barGroups.add(
-        BarChartGroupData(
-          x: i,
-          barRods: [
-            BarChartRodData(
-              toY: isCompleted ? 1 : 0,
-              gradient: isCompleted ? AppTheme.primaryGradient : null,
-              color: isCompleted ? null : AppTheme.border,
-              width: 6,
-              borderRadius: const BorderRadius.vertical(
-                  top: Radius.circular(3)),
+  Widget _buildTodayButton(HabitModel habit, HabitsProvider provider) {
+    final isCompleted = habit.isCompletedToday();
+    return GestureDetector(
+      onTap: () => provider.toggleCompletion(habit),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(vertical: 16),
+        decoration: BoxDecoration(
+          gradient: isCompleted
+              ? null
+              : const LinearGradient(
+                  colors: [Color(0xFF7C3AED), Color(0xFF3B82F6)]),
+          color: isCompleted ? const Color(0xFF18181B) : null,
+          borderRadius: BorderRadius.circular(16),
+          border: isCompleted
+              ? Border.all(color: const Color(0xFF27272A))
+              : null,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              isCompleted
+                  ? Icons.check_circle
+                  : Icons.radio_button_unchecked,
+              color: isCompleted
+                  ? const Color(0xFF22C55E)
+                  : Colors.white,
+            ),
+            const SizedBox(width: 10),
+            Text(
+              isCompleted ? 'Completed Today' : 'Mark as Done Today',
+              style: TextStyle(
+                color: isCompleted ? const Color(0xFF22C55E) : Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ],
         ),
-      );
-    }
-
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: AppTheme.surface,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppTheme.border),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text('Last 30 Days',
-              style: TextStyle(
-                  color: AppTheme.textPrimary,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600)),
-          const SizedBox(height: 20),
-          SizedBox(
-            height: 120,
-            child: BarChart(
-              BarChartData(
-                alignment: BarChartAlignment.spaceAround,
-                maxY: 1,
-                minY: 0,
-                barTouchData: BarTouchData(enabled: false),
-                titlesData: const FlTitlesData(
-                  show: false,
-                ),
-                borderData: FlBorderData(show: false),
-                gridData: const FlGridData(show: false),
-                barGroups: barGroups,
-              ),
-            ),
-          ),
-        ],
       ),
     );
-  }
-
-  Widget _buildDetails(HabitModel habit) {
-    const days = [
-      'Sunday', 'Monday', 'Tuesday', 'Wednesday',
-      'Thursday', 'Friday', 'Saturday'
-    ];
-    final selectedDays = habit.weekDays.map((d) => days[d]).join(', ');
-
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppTheme.surface,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppTheme.border),
-      ),
-      child: Column(
-        children: [
-          _detailRow('Category', habit.category),
-          const Divider(color: AppTheme.border, height: 20),
-          _detailRow('Repeat', selectedDays),
-          if (habit.reminderTime != null) ...
-            [
-              const Divider(color: AppTheme.border, height: 20),
-              _detailRow(
-                  'Reminder', '${habit.reminderTime} daily'),
-            ],
-          const Divider(color: AppTheme.border, height: 20),
-          _detailRow('Created',
-              AppDateUtils.formatDate(habit.createdAt)),
-        ],
-      ),
-    );
-  }
-
-  Widget _detailRow(String label, String value) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(label,
-            style: const TextStyle(
-                color: AppTheme.textSecondary, fontSize: 14)),
-        Flexible(
-          child: Text(value,
-              textAlign: TextAlign.right,
-              style: const TextStyle(
-                  color: AppTheme.textPrimary,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500)),
-        ),
-      ],
-    );
-  }
-
-  Future<void> _confirmDelete(
-      BuildContext context, HabitProvider habitProvider) async {
-    final confirm = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        backgroundColor: AppTheme.surface,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text('Delete Habit',
-            style: TextStyle(color: AppTheme.textPrimary)),
-        content: const Text(
-          'Are you sure you want to delete this habit? All streak data will be lost.',
-          style: TextStyle(color: AppTheme.textSecondary),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Delete',
-                style: TextStyle(color: AppTheme.error)),
-          ),
-        ],
-      ),
-    );
-
-    if (confirm == true && context.mounted) {
-      await habitProvider.deleteHabit(habit.id);
-      if (context.mounted) Navigator.pop(context);
-    }
   }
 }

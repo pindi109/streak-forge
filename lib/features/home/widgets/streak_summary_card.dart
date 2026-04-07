@@ -1,136 +1,88 @@
+
 import 'package:flutter/material.dart';
-import '../../../core/theme/app_theme.dart';
+import '../../habits/providers/habits_provider.dart';
 
 class StreakSummaryCard extends StatelessWidget {
-  final int completedCount;
-  final int totalCount;
-  final double completionRate;
+  final HabitsProvider provider;
 
-  const StreakSummaryCard({
-    super.key,
-    required this.completedCount,
-    required this.totalCount,
-    required this.completionRate,
+  const StreakSummaryCard({super.key, required this.provider});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: _StatItem(
+            icon: Icons.local_fire_department,
+            iconColor: const Color(0xFFF97316),
+            label: 'Active Streaks',
+            value: '${provider.habits.where((h) => h.currentStreak > 0).length}',
+          ),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: _StatItem(
+            icon: Icons.emoji_events,
+            iconColor: const Color(0xFFFBBF24),
+            label: 'Longest Streak',
+            value: '${provider.longestOverallStreak}d',
+          ),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: _StatItem(
+            icon: Icons.check_circle,
+            iconColor: const Color(0xFF22C55E),
+            label: 'Total Habits',
+            value: '${provider.habits.length}',
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _StatItem extends StatelessWidget {
+  final IconData icon;
+  final Color iconColor;
+  final String label;
+  final String value;
+
+  const _StatItem({
+    required this.icon,
+    required this.iconColor,
+    required this.label,
+    required this.value,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Color(0xFF1E1B4B), Color(0xFF1E293B)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppTheme.primary.withOpacity(0.3)),
+        color: const Color(0xFF18181B),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: const Color(0xFF27272A)),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Daily Progress',
-                    style: TextStyle(
-                      color: AppTheme.textSecondary,
-                      fontSize: 13,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  const SizedBox(height: 6),
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: '$completedCount',
-                          style: const TextStyle(
-                            color: AppTheme.textPrimary,
-                            fontSize: 36,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        TextSpan(
-                          text: ' / $totalCount',
-                          style: const TextStyle(
-                            color: AppTheme.textSecondary,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const Text(
-                    'habits completed',
-                    style: TextStyle(
-                        color: AppTheme.textSecondary, fontSize: 13),
-                  ),
-                ],
-              ),
-              _buildCircularProgress(),
-            ],
-          ),
-          const SizedBox(height: 16),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: LinearProgressIndicator(
-              value: completionRate,
-              backgroundColor: AppTheme.border,
-              valueColor: const AlwaysStoppedAnimation<Color>(
-                  AppTheme.primary),
-              minHeight: 8,
-            ),
-          ),
+          Icon(icon, color: iconColor, size: 22),
           const SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Text(
-                '${(completionRate * 100).toStringAsFixed(0)}% complete',
-                style: const TextStyle(
-                    color: AppTheme.primaryLight,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w500),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildCircularProgress() {
-    return SizedBox(
-      width: 72,
-      height: 72,
-      child: Stack(
-        children: [
-          SizedBox(
-            width: 72,
-            height: 72,
-            child: CircularProgressIndicator(
-              value: completionRate,
-              strokeWidth: 6,
-              backgroundColor: AppTheme.border,
-              valueColor:
-                  const AlwaysStoppedAnimation<Color>(AppTheme.primary),
+          Text(
+            value,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
             ),
           ),
-          Center(
-            child: Text(
-              completionRate == 1.0 ? '🔥' : '${(completionRate * 100).toInt()}%',
-              style: TextStyle(
-                color: completionRate == 1.0
-                    ? AppTheme.textPrimary
-                    : AppTheme.primaryLight,
-                fontSize: completionRate == 1.0 ? 24 : 13,
-                fontWeight: FontWeight.w700,
-              ),
+          const SizedBox(height: 2),
+          Text(
+            label,
+            style: const TextStyle(
+              color: Color(0xFFA1A1AA),
+              fontSize: 11,
             ),
           ),
         ],

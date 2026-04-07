@@ -1,27 +1,34 @@
+
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
-import 'package:timezone/data/latest.dart' as tz;
+
+import 'core/constants/app_constants.dart';
 import 'core/theme/app_theme.dart';
 import 'features/auth/providers/auth_provider.dart';
 import 'features/auth/screens/login_screen.dart';
-import 'features/habits/providers/habit_provider.dart';
-import 'features/habits/providers/reminder_provider.dart';
-import 'features/home/screens/home_screen.dart';
-import 'features/habits/services/notification_service.dart';
+import 'features/auth/screens/register_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp();
-  tz.initializeTimeZones();
-  await NotificationService.instance.initialize();
+
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.light,
+      systemNavigationBarColor: AppTheme.background,
+      systemNavigationBarIconBrightness: Brightness.light,
     ),
   );
+
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+
   runApp(const StreakForgeApp());
 }
 
@@ -32,36 +39,28 @@ class StreakForgeApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => AppAuthProvider()),
-        ChangeNotifierProvider(create: (_) => HabitProvider()),
-        ChangeNotifierProvider(create: (_) => ReminderProvider()),
+        ChangeNotifierProvider<AuthProvider>(
+          create: (_) => AuthProvider(),
+        ),
       ],
       child: MaterialApp(
-        title: 'StreakForge',
+        title: AppConstants.appName,
         debugShowCheckedModeBanner: false,
         theme: AppTheme.darkTheme,
-        home: const AuthWrapper(),
+        initialRoute: AppConstants.routeLogin,
+        routes: {
+          AppConstants.routeLogin: (_) => const LoginScreen(),
+          AppConstants.routeRegister: (_) => const RegisterScreen(),
+        },
+        builder: (context, child) {
+          return MediaQuery(
+            data: MediaQuery.of(context).copyWith(
+              textScaler: TextScaler.noScaling,
+            ),
+            child: child ?? const SizedBox.shrink(),
+          );
+        },
       ),
     );
-  }
-}
-
-class AuthWrapper extends StatelessWidget {
-  const AuthWrapper({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final auth = context.watch<AppAuthProvider>();
-    if (auth.isLoading) {
-      return const Scaffold(
-        backgroundColor: Color(0xFF0A0A0F),
-        body: Center(
-          child: CircularProgressIndicator(
-            color: Color(0xFF7C3AED),
-          ),
-        ),
-      );
-    }
-    return auth.user != null ? const HomeScreen() : const LoginScreen();
   }
 }

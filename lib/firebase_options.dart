@@ -29,19 +29,19 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: '',
-    appId: '1:735279769416:android:845f95d172117a3ccdb57d',
-    messagingSenderId: '735279769416',
-    projectId: 'streak-forge-567341',
-    storageBucket: 'streak-forge-567341.appspot.com',
+    apiKey: 'AIzaSyCtJ4j5u8SMQovzvG9bH-5SAq3RBbujp68',
+    appId: '1:36498065610:android:b1cb8613114387a3facc33',
+    messagingSenderId: '36498065610',
+    projectId: 'streak-forge-567485',
+    storageBucket: 'streak-forge-567485.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: '',
-    appId: '1:735279769416:ios:9b4e66a86a84f3bfcdb57d',
-    messagingSenderId: '735279769416',
-    projectId: 'streak-forge-567341',
-    storageBucket: 'streak-forge-567341.appspot.com',
+    apiKey: 'AIzaSyCtJ4j5u8SMQovzvG9bH-5SAq3RBbujp68',
+    appId: '1:36498065610:ios:b5ba907b91d79257facc33',
+    messagingSenderId: '36498065610',
+    projectId: 'streak-forge-567485',
+    storageBucket: 'streak-forge-567485.appspot.com',
     iosClientId: '',
     iosBundleId: 'com.futurebuild.streakforge',
   );

@@ -1,0 +1,29 @@
+{
+  "app_name": "StreakForge",
+  "app_name_slug": "streak-forge",
+  "tagline": "Build habits. Forge your future daily.",
+  "unique_accent": "#10B981",
+  "colour_palette": {
+    "background": "#0A0A0F",
+    "surface": "#18181B",
+    "primary": "#7C3AED",
+    "accent": "#10B981",
+    "textPrimary": "#FFFFFF",
+    "textSecondary": "#A1A1AA"
+  },
+  "brand_brief": "StreakForge speaks to ambitious self-improvers who treat personal growth like a craft \u2014 disciplined, data-driven, and relentless. The brand tone is motivational yet minimal, cutting through noise with clean visuals and purposeful feedback loops. It targets 18\u201335 year old professionals and students who want visible proof of their daily consistency.",
+  "logo_prompt": "A sleek, modern app logo for 'StreakForge' on a near-black #0A0A0F background. The icon features an abstract flame composed of upward-rising geometric bar segments, each segment filled with a smooth gradient from deep purple #7C3AED at the base transitioning to emerald green #10B981 at the tip, suggesting growth and momentum. The bars are sharp-edged and minimal, evoking both a progress chart and a burning streak. Below the icon, the wordmark 'StreakForge' is set in a bold, modern geometric sans-serif in white. Overall aesthetic is dark-mode SaaS, ultra-clean, high contrast, minimal shadows, suitable for a mobile app icon and web dashboard.",
+  "icon_style": "Minimal geometric flame built from ascending bar chart segments, purple-to-emerald gradient on dark background, sharp edges, no outlines",
+  "font_pairing": {
+    "heading": "Space Grotesk",
+    "body": "Inter"
+  },
+  "logo_generated": true,
+  "logo_variants": [
+    "C:\\Projects\\ai-app-builder\\generated_apps\\streak-forge\\branding\\icon_512.png",
+    "C:\\Projects\\ai-app-builder\\generated_apps\\streak-forge\\branding\\icon_192.png",
+    "C:\\Projects\\ai-app-builder\\generated_apps\\streak-forge\\branding\\icon_180.png",
+    "C:\\Projects\\ai-app-builder\\generated_apps\\streak-forge\\android\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher.png",
+    "C:\\Projects\\ai-app-builder\\generated_apps\\streak-forge\\ios\\Runner\\Assets.xcassets\\AppIcon.appiconset\\Icon-1024.png"
+  ]
+}

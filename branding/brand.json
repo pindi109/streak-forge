@@ -1,7 +1,7 @@
 {
   "app_name": "StreakForge",
   "app_name_slug": "streak-forge",
-  "tagline": "Build habits. Forge your future daily.",
+  "tagline": "Build habits. Break limits. Every single day.",
   "unique_accent": "#10B981",
   "colour_palette": {
     "background": "#0A0A0F",
@@ -11,9 +11,9 @@
     "textPrimary": "#FFFFFF",
     "textSecondary": "#A1A1AA"
   },
-  "brand_brief": "StreakForge speaks to ambitious self-improvers who treat personal growth like a craft \u2014 disciplined, data-driven, and relentless. The brand tone is motivational yet minimal, cutting through noise with clean visuals and purposeful feedback loops. It targets 18\u201335 year old professionals and students who want visible proof of their daily consistency.",
-  "logo_prompt": "A sleek, modern app logo for 'StreakForge' on a near-black #0A0A0F background. The icon features an abstract flame composed of upward-rising geometric bar segments, each segment filled with a smooth gradient from deep purple #7C3AED at the base transitioning to emerald green #10B981 at the tip, suggesting growth and momentum. The bars are sharp-edged and minimal, evoking both a progress chart and a burning streak. Below the icon, the wordmark 'StreakForge' is set in a bold, modern geometric sans-serif in white. Overall aesthetic is dark-mode SaaS, ultra-clean, high contrast, minimal shadows, suitable for a mobile app icon and web dashboard.",
-  "icon_style": "Minimal geometric flame built from ascending bar chart segments, purple-to-emerald gradient on dark background, sharp edges, no outlines",
+  "brand_brief": "StreakForge speaks to driven self-improvers and productivity enthusiasts who want tangible proof of their daily consistency. The brand is focused, empowering, and quietly intense \u2014 like a personal coach who celebrates your wins without the fluff. It blends the precision of data with the warmth of personal growth.",
+  "logo_prompt": "A minimal dark-mode logo mark for an app called StreakForge. Design a stylised flame composed of upward-curving streak lines or chain links, merging into a sleek abstract fire shape. The flame uses a gradient flowing from deep purple #7C3AED at the base to emerald green #10B981 at the tip, suggesting growth and momentum. The background is near-black #0A0A0F. The overall shape is compact, geometric, and modern \u2014 suitable for a mobile app icon. Style: flat vector with subtle glow effect, clean edges, no gradients on outer borders. The mood is focused, energetic, and minimal.",
+  "icon_style": "Minimal geometric flame mark with purple-to-emerald gradient, subtle inner glow, flat vector style on dark background",
   "font_pairing": {
     "heading": "Space Grotesk",
     "body": "Inter"

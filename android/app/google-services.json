@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "735279769416",
+    "project_id": "streak-forge-567341",
+    "storage_bucket": "streak-forge-567341.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:735279769416:android:845f95d172117a3ccdb57d",
+        "android_client_info": {
+          "package_name": "com.futurebuild.streak_forge"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": ""
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

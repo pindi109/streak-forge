@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us — StreakForge</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0A0A0F;
+      --surface: #18181B;
+      --primary: #7C3AED;
+      --primary-light: #8B5CF6;
+      --accent: #10B981;
+      --gradient: linear-gradient(135deg, #7C3AED, #3B82F6);
+      --accent-gradient: linear-gradient(135deg, #7C3AED, #10B981);
+      --text-primary: #FFFFFF;
+      --text-secondary: #A1A1AA;
+      --border: #27272A;
+      --font-heading: 'Space Grotesk', sans-serif;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ───── NAV ───── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10, 10, 15, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      background: var(--accent-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 16px rgba(124, 58, 237, 0.4);
+      flex-shrink: 0;
+    }
+
+    .logo-mark svg { display: block; }
+
+    .logo-text {
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--text-primary); }
+
+    .nav-links a.active { color: var(--accent); }
+
+    .nav-cta {
+      background: var(--gradient);
+      color: #fff !important;
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-weight: 600 !important;
+      transition: opacity 0.2s !important;
+    }
+
+    .nav-cta:hover { opacity: 0.88; }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--text-primary);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px 20px;
+      gap: 4px;
+    }
+
+    .mobile-menu.open { display: flex; }
+
+    .mobile-menu a {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      font-weight: 500;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.2s;
+    }
+
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu a:hover { color: var(--text-primary); }
+    .mobile-menu a.active { color: var(--accent); }
+
+    /* ───── MAIN ───── */
+    main { flex: 1; }
+
+    /* ───── PAGE HERO ───── */
+    .page-hero {
+      padding: 72px 24px 56px;
+      text-align: center;
+    }
+
+    .page-hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .page-hero h1 span {
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .page-hero p {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    /* ───── CONTACT GRID ───── */
+    .contact-section {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 40px;
+      align-items: start;
+    }
+
+    /* ───── FORM CARD ───── */
+    .form-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 40px;
+    }
+
+    .form-card h2 {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 28px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .form-group.full { grid-column: 1 / -1; }
+
+    .form-group label {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      letter-spacing: 0.02em;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      padding: 11px 14px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      width: 100%;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: #52525B; }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+    }
+
+    .form-group select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23A1A1AA' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      cursor: pointer;
+    }
+
+    .form-group select option {
+      background: var(--surface);
+      color: var(--text-primary);
+    }
+
+    .form-group textarea { resize: vertical; min-height: 130px; }
+
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--gradient);
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      padding: 14px 32px;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+      width: 100%;
+      margin-top: 8px;
+    }
+
+    .submit-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+    .submit-btn:active { transform: translateY(0); }
+
+    /* ───── SIDEBAR ───── */
+    .sidebar { display: flex; flex-direction: column; gap: 24px; }
+
+    .info-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+    }
+
+    .info-card h3 {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .info-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .info-icon.purple { background: rgba(124, 58, 237, 0.15); }
+    .info-icon.green { background: rgba(16, 185, 129, 0.15); }
+    .info-icon.blue { background: rgba(59, 130, 246, 0.15); }
+
+    .info-card p,
+    .info-card a {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+
+    .info-card a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .info-card a:hover { text-decoration: underline; }
+
+    .hours-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .hours-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.88rem;
+    }
+
+    .hours-list .day { color: var(--text-secondary); }
+
+    .hours-list .time {
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    .hours-list .closed { color: #EF4444; font-weight: 500; }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+      margin-top: 12px;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse-dot 2s infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* ───── FAQ SECTION ───── */
+    .faq-section {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 24px 96px;
+    }
+
+    .faq-section h2 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .faq-section h2 span {
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .faq-list { display: flex; flex-direction: column; gap: 12px; }
+
+    .faq-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .faq-item.open { border-color: var(--primary); }
+
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .faq-question span {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.4;
+    }
+
+    .faq-chevron {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      background: rgba(124, 58, 237, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s, background 0.2s;
+    }
+
+    .faq-item.open .faq-chevron {
+      transform: rotate(180deg);
+      background: rgba(124, 58, 237, 0.25);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease;
+    }
+
+    .faq-answer-inner {
+      padding: 0 24px 20px;
+      color: var(--text-secondary);
+      font-size: 0.93rem;
+      line-height: 1.7;
+    }
+
+    /* ───── FOOTER ───── */
+    footer {
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .footer-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 48px 24px 32px;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-brand .logo-text { font-size: 1.1rem; }
+
+    .footer-brand p {
+      color: var(--text-secondary);
+      font-size: 0.88rem;
+      line-height: 1.65;
+      margin-top: 12px;
+      max-width: 280px;
+    }
+
+    .footer-col h4 {
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 14px;
+    }
+
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+    .footer-col ul a {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-size: 0.88rem;
+      transition: color 0.2s;
+    }
+
+    .footer-col ul a:hover { color: var(--text-primary); }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-bottom p {
+      color: var(--text-secondary);
+      font-size: 0.82rem;
+    }
+
+    .footer-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+    }
+
+    .footer-badge span {
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 600;
+    }
+
+    /* ───── DIVIDER ───── */
+    .section-divider {
+      max-width: 1120px;
+      margin: 0 auto 64px;
+      padding: 0 24px;
+      border: none;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ───── RESPONSIVE ───── */
+    @media (max-width: 900px) {
+      .contact-section {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+
+      .form-card { padding: 28px 20px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .form-group.full { grid-column: 1; }
+
+      .sidebar { grid-template-columns: 1fr; }
+
+      .footer-top { grid-template-columns: 1fr; gap: 28px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+
+      .page-hero { padding: 52px 24px 40px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ───── NAV ───── -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-mark">
+          <svg width="20" height="22" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 1C10 1 3 7 3 13C3 16.866 6.134 20 10 20C13.866 20 17 16.866 17 13C17 7 10 1 10 1Z" fill="url(#flame)" />
+            <path d="M10 9C10 9 7 12 7 14.5C7 16.157 8.343 17.5 10 17.5C11.657 17.5 13 16.157 13 14.5C13 12 10 9 10 9Z" fill="rgba(255,255,255,0.25)" />
+            <defs>
+              <linearGradient id="flame" x1="10" y1="1" x2="10" y2="20" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#7C3AED"/>
+                <stop offset="1" stop-color="#10B981"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <span class="logo-text">StreakForge</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+        <li><a href="terms.html">Terms</a></li>
+        <li><a href="index.html#download" class="nav-cta">Get App</a></li>
+      </ul>
+
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="index.html">Home</a>
+      <a href="contact.html" class="active">Contact</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="index.html#download">Get App</a>
+    </div>
+  </nav>
+
+  <!-- ───── MAIN ───── -->
+  <main>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+      <h1>Get in <span>Touch</span></h1>
+      <p>Have a question, idea, or need help with your streaks? We're here for you — reach out anytime.</p>
+    </section>
+
+    <!-- Contact Grid -->
+    <section class="contact-section">
+
+      <!-- Form -->
+      <div class="form-card">
+        <h2>Send us a message</h2>
+        <form action="#" method="POST" novalidate>
+          <div class="form-grid">
+
+            <div class="form-group">
+              <label for="first-name">First Name</label>
+              <input type="text" id="first-name" name="first_name" placeholder="Alex" autocomplete="given-name" required />
+            </div>
+
+            <div class="form-group">
+              <label for="last-name">Last Name</label>
+              <input type="text" id="last-name" name="last_name" placeholder="Rivera" autocomplete="family-name" required />
+            </div>
+
+            <div class="form-group full">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required />
+            </div>
+
+            <div class="form-group full">
+              <label for="subject">Topic</label>
+              <select id="subject" name="subject" required>
+                <option value="" disabled selected>Select a topic…</option>
+                <option value="streaks">Streak tracking issue</option>
+                <option value="reminders">Reminders not working</option>
+                <option value="charts">Progress charts question</option>
+                <option value="account">Account &amp; billing</option>
+                <option value="feature">Feature request</option>
+                <option value="bug">Bug report</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group full">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" placeholder="Tell us what's on your mind — the more detail, the better we can help…" required></textarea>
+            </div>
+
+            <div class="form-group full">
+              <button type="submit" class="submit-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                </svg>
+                Send Message
+              </button>
+            </div>
+
+          </div>
+        </form>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+
+        <!-- Email -->
+        <div class="info-card">
+          <h3>
+            <div class="info-icon green">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </div>
+            Support Email
+          </h3>
+          <p>For non-urgent questions or detailed inquiries, drop us a line:</p>
+          <br/>
+          <a href="mailto:support@streakforge.app">support@streakforge.app</a>
+          <br/><br/>
+          <p style="font-size:0.83rem;">We aim to reply within <strong style="color:var(--text-primary);">24 hours</strong> on business days.</p>
+        </div>
+
+        <!-- Hours -->
+        <div class="info-card">
+          <h3>
+            <div class="info-icon purple">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
+            Support Hours
+          </h3>
+          <ul class="hours-list">
+            <li><span class="day">Monday – Friday</span><span class="time">9 AM – 6 PM EST</span></li>
+            <li><span class="day">Saturday</span><span class="time">10 AM – 3 PM EST</span></li>
+            <li><span class="day">Sunday</span><span class="closed">Closed</span></li>
+          </ul>
+          <div class="status-badge">
+            <span class="status-dot"></span>
+            Support is currently open
+          </div>
+        </div>
+
+        <!-- Response time -->
+        <div class="info-card">
+          <h3>
+            <div class="info-icon blue">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+            </div>
+            Response Times
+          </h3>
+          <p>
+            <strong style="color:var(--text-primary);">General queries</strong> — within 24 hrs<br/><br/>
+            <strong style="color:var(--text-primary);">Bug reports</strong> — within 12 hrs<br/><br/>
+            <strong style="color:var(--text-primary);">Billing issues</strong> — within 4 hrs
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- FAQ -->
+    <section class="faq-section">
+      <h2>Frequently Asked <span>Questions</span></h2>
+
+      <div class="faq-list" id="faqList">
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>Why did my streak reset even though I completed my habit?</span>
+            <div class="faq-chevron">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#A1A1AA" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </div>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Streaks in StreakForge are calculated based on your local device time zone. If you logged your habit after midnight but before the day reset in your settings, it may have counted toward the following day. We recommend checking your <strong>timezone setting</strong> under Profile → Settings → Time Zone. Also ensure your habit's daily deadline hasn't been set too early. If you believe it's a bug, please contact us with a screenshot of your activity log and we'll investigate promptly.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>How do I set up daily reminders for my habits?</span>
+            <div class="faq-chevron">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#A1A1AA" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </div>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Setting up reminders is simple. Open the habit you'd like a reminder for, tap <strong>Edit</strong>, then select <strong>Reminders</strong>. You can choose one or multiple daily times, pick specific days of the week, and even write a custom motivational message that will appear in your notification. Make sure StreakForge has notification permissions enabled in your phone's system settings — otherwise reminders won't fire. If they're still not arriving, try toggling the permission off and on again, then restart the app.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>Can I view my progress charts for a specific date range?</span>
+            <div class="faq-chevron">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#A1A1AA" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </div>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Yes! StreakForge supports flexible date range filtering on all progress charts. Head to the <strong>Insights</strong> tab, select the habit you want to analyse, and tap the calendar icon in the top-right corner. You can choose from preset ranges (7 days, 30 days, 90 days, this year) or set a fully custom start and end date. Charts are available in bar, line, and heatmap formats — swipe left on the chart to cycle between them. Exporting charts as images is available on the Pro plan.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ───── FOOTER ───── -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo" style="margin-bottom:4px; display:inline-flex;">
+            <div class="logo-mark">
+              <svg width="20" height="22" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 1C10 1 3 7 3 13C3 16.866 6.134 20 10 20C13.866 20 17 16.866 17 13C17 7 10 1 10 1Z" fill="url(#flame2)" />
+                <path d="M10 9C10 9 7 12 7 14.5C7 16.157 8.343 17.5 10 17.5C11.657 17.5 13 16.157 13 14.5C13 12 10 9 10 9Z" fill="rgba(255,255,255,0.25)" />
+                <defs>
+                  <linearGradient id="flame2" x1="10" y1="1" x2="10" y2="20" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#7C3AED"/>
+                    <stop offset="1" stop-color="#10B981"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+            <span class="logo-text">StreakForge</span>
+          </a>
+          <p>Build habits. Break limits. Every single day. Your consistency, beautifully tracked.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#features">Features</a></li>
+            <li><a href="index.html#download">Download</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms of Service</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2025 StreakForge. All rights reserved.</p>
+        <div class="footer-badge">
+          Made for builders by <span>&nbsp;StreakForge&nbsp;</span> 🔥
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ───── JS ───── -->
+  <script>
+    // Hamburger
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+    });
+
+    // FAQ accordion
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+      const btn = item.querySelector('.faq-question');
+      const answer = item.querySelector('.faq-answer');
+
+      btn.addEventListener('click', () => {
+        const isOpen = item.classList.contains('open');
+
+        // Close all
+        faqItems.forEach(i => {
+          i.classList.remove('open');
+          i.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+          i.querySelector('.faq-answer').style.maxHeight = '0';
+        });
+
+        // Toggle clicked
+        if (!isOpen) {
+          item.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+          answer.style.maxHeight = answer.scrollHeight + 'px';
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

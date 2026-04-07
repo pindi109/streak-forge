@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy – StreakForge</title>
+  <meta name="description" content="StreakForge Privacy Policy – how Future Build Cov Ltd collects, uses and protects your personal data." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0A0A0F;
+      --surface: #18181B;
+      --primary: #7C3AED;
+      --primary-light: #8B5CF6;
+      --accent: #10B981;
+      --grad-start: #7C3AED;
+      --grad-end: #3B82F6;
+      --text: #FFFFFF;
+      --text-sec: #A1A1AA;
+      --border: #27272A;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--grad-start), var(--accent));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 16px rgba(124,58,237,0.5);
+      flex-shrink: 0;
+    }
+    .logo-mark svg { width: 20px; height: 20px; }
+    .logo-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-sec);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+    .nav-cta {
+      background: linear-gradient(135deg, var(--grad-start), var(--grad-end));
+      color: var(--text) !important;
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-weight: 600 !important;
+      transition: opacity 0.2s !important;
+    }
+    .nav-cta:hover { opacity: 0.88; }
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px 20px;
+      gap: 16px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      color: var(--text-sec);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.2s;
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu a:hover, .mobile-menu a.active { color: var(--text); }
+
+    /* ── HERO BANNER ── */
+    .page-hero {
+      background: linear-gradient(180deg, rgba(124,58,237,0.12) 0%, transparent 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 64px 24px 48px;
+      text-align: center;
+    }
+    .page-hero .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(124,58,237,0.15);
+      border: 1px solid rgba(124,58,237,0.3);
+      color: var(--primary-light);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 99px;
+      margin-bottom: 20px;
+    }
+    .page-hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 14px;
+    }
+    .page-hero p {
+      color: var(--text-sec);
+      max-width: 540px;
+      margin: 0 auto;
+      font-size: 0.95rem;
+    }
+    .effective-date {
+      display: inline-block;
+      margin-top: 16px;
+      background: rgba(16,185,129,0.1);
+      border: 1px solid rgba(16,185,129,0.25);
+      color: var(--accent);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 4px 14px;
+      border-radius: 99px;
+    }
+
+    /* ── LAYOUT ── */
+    .content-wrapper {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    /* ── SIDEBAR TOC ── */
+    .toc {
+      position: sticky;
+      top: 84px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px 20px;
+    }
+    .toc h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-sec);
+      margin-bottom: 16px;
+    }
+    .toc ol {
+      list-style: none;
+      counter-reset: toc-counter;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .toc ol li { counter-increment: toc-counter; }
+    .toc ol li a {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      color: var(--text-sec);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 500;
+      padding: 5px 8px;
+      border-radius: 6px;
+      transition: background 0.2s, color 0.2s;
+      line-height: 1.4;
+    }
+    .toc ol li a::before {
+      content: counter(toc-counter, decimal-leading-zero);
+      font-size: 0.7rem;
+      color: var(--primary-light);
+      flex-shrink: 0;
+      font-weight: 700;
+    }
+    .toc ol li a:hover {
+      background: rgba(124,58,237,0.12);
+      color: var(--text);
+    }
+
+    /* ── POLICY CONTENT ── */
+    .policy-content { min-width: 0; }
+
+    .policy-section {
+      margin-bottom: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid var(--border);
+    }
+    .policy-section:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .section-num {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--grad-start), var(--grad-end));
+      border-radius: 9px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .section-header h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .policy-content p {
+      color: var(--text-sec);
+      margin-bottom: 14px;
+      font-size: 0.95rem;
+      line-height: 1.75;
+    }
+    .policy-content p:last-child { margin-bottom: 0; }
+    .policy-content strong { color: var(--text); font-weight: 600; }
+
+    .policy-content h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin: 24px 0 10px;
+    }
+
+    .policy-content ul, .policy-content ol {
+      color: var(--text-sec);
+      padding-left: 0;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 16px;
+      font-size: 0.95rem;
+    }
+    .policy-content ul li, .policy-content ol li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.65;
+    }
+    .policy-content ul li::before {
+      content: '';
+      display: block;
+      width: 6px;
+      height: 6px;
+      background: var(--primary-light);
+      border-radius: 50%;
+      margin-top: 9px;
+      flex-shrink: 0;
+    }
+    .policy-content ol {
+      counter-reset: ol-counter;
+    }
+    .policy-content ol li {
+      counter-increment: ol-counter;
+    }
+    .policy-content ol li::before {
+      content: counter(ol-counter) ".";
+      color: var(--primary-light);
+      font-weight: 700;
+      font-size: 0.85rem;
+      min-width: 20px;
+      margin-top: 1px;
+      flex-shrink: 0;
+    }
+
+    /* Cards */
+    .info-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin: 20px 0;
+    }
+    .info-card.accent-green { border-left: 3px solid var(--accent); }
+    .info-card.accent-purple { border-left: 3px solid var(--primary); }
+    .info-card.accent-blue { border-left: 3px solid #3B82F6; }
+    .info-card p { margin-bottom: 0 !important; }
+    .info-card p + p { margin-top: 10px !important; }
+
+    .rights-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 14px;
+      margin: 20px 0;
+    }
+    .right-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 16px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .right-card:hover {
+      border-color: rgba(124,58,237,0.4);
+      transform: translateY(-2px);
+    }
+    .right-icon {
+      font-size: 1.4rem;
+      margin-bottom: 8px;
+      display: block;
+    }
+    .right-card h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .right-card p {
+      font-size: 0.8rem !important;
+      color: var(--text-sec);
+      margin: 0 !important;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 0.88rem;
+    }
+    .data-table th {
+      text-align: left;
+      padding: 10px 14px;
+      background: rgba(124,58,237,0.12);
+      color: var(--primary-light);
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid var(--border);
+    }
+    .data-table th:first-child { border-radius: 8px 0 0 0; }
+    .data-table th:last-child { border-radius: 0 8px 0 0; }
+    .data-table td {
+      padding: 10px 14px;
+      color: var(--text-sec);
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.55;
+    }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+    .contact-box {
+      background: linear-gradient(135deg, rgba(124,58,237,0.12), rgba(59,130,246,0.08));
+      border: 1px solid rgba(124,58,237,0.3);
+      border-radius: 14px;
+      padding: 28px 26px;
+      margin-top: 20px;
+    }
+    .contact-box h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 14px !important;
+      margin-top: 0 !important;
+    }
+    .contact-box a {
+      color: var(--primary-light);
+      text-decoration: none;
+    }
+    .contact-box a:hover { text-decoration: underline; }
+    .contact-box p { color: var(--text-sec); font-size: 0.9rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 48px 24px 32px;
+    }
+    .footer-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.5fr repeat(3, 1fr);
+      gap: 40px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--border);
+    }
+    .footer-brand p {
+      color: var(--text-sec);
+      font-size: 0.85rem;
+      margin-top: 12px;
+      max-width: 260px;
+      line-height: 1.6;
+    }
+    .footer-col h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--text-sec);
+      margin-bottom: 14px;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .footer-col ul li a {
+      color: var(--text-sec);
+      text-decoration: none;
+      font-size: 0.88rem;
+      transition: color 0.2s;
+    }
+    .footer-col ul li a:hover { color: var(--text); }
+    .footer-bottom {
+      padding-top: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-bottom p {
+      color: var(--text-sec);
+      font-size: 0.82rem;
+    }
+    .footer-bottom a { color: var(--text-sec); text-decoration: none; }
+    .footer-bottom a:hover { color: var(--text); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .content-wrapper {
+        grid-template-columns: 1fr;
+      }
+      .toc { position: static; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .page-hero { padding: 48px 20px 36px; }
+      .content-wrapper { padding: 36px 20px 60px; }
+      .rights-grid { grid-template-columns: 1fr 1fr; }
+      .footer-top { grid-template-columns: 1fr; gap: 28px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+      .data-table { display: block; overflow-x: auto; }
+    }
+    @media (max-width: 380px) {
+      .rights-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="logo-mark">
+        <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 2C10 2 5 7 5 11.5C5 14.5 7.2 17 10 17C12.8 17 15 14.5 15 11.5C15 7 10 2 10 2Z" fill="url(#flame)" />
+          <path d="M10 8C10 8 7.5 10.5 7.5 12.5C7.5 13.9 8.6 15 10 15C11.4 15 12.5 13.9 12.5 12.5C12.5 10.5 10 8 10 8Z" fill="rgba(255,255,255,0.25)" />
+          <defs>
+            <linearGradient id="flame" x1="10" y1="2" x2="10" y2="17" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#10B981"/>
+              <stop offset="100%" stop-color="#7C3AED"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <span class="logo-name">StreakForge</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="privacy.html" class="active">Privacy</a></li>
+      <li><a href="terms.html">Terms</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="#" class="nav-cta">Get the App</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="privacy.html" class="active">Privacy</a>
+    <a href="terms.html">Terms</a>
+    <a href="contact.html">Contact</a>
+    <a href="#">Get the App</a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="page-hero">
+  <div class="badge">🔒 Legal</div>
+  <h1>Privacy Policy</h1>
+  <p>We believe privacy is a right, not an afterthought. Here's exactly how StreakForge handles your personal data.</p>
+  <span class="effective-date">Effective Date: 1 January 2025 &nbsp;·&nbsp; Version 1.0</span>
+</section>
+
+<!-- ── MAIN CONTENT ── -->
+<div class="content-wrapper">
+
+  <!-- SIDEBAR TOC -->
+  <aside class="toc">
+    <h3>Contents</h3>
+    <ol>
+      <li><a href="#s1">Who We Are</a></li>
+      <li><a href="#s2">Data We Collect</a></li>
+      <li><a href="#s3">How We Use Your Data</a></li>
+      <li><a href="#s4">Legal Bases (GDPR)</a></li>
+      <li><a href="#s5">Cookies & Tracking</a></li>
+      <li><a href="#s6">Third-Party Services</a></li>
+      <li><a href="#s7">Data Sharing</a></li>
+      <li><a href="#s8">International Transfers</a></li>
+      <li><a href="#s9">Data Retention</a></li>
+      <li><a href="#s10">Your Rights</a></li>
+      <li><a href="#s11">Children's Privacy</a></li>
+      <li><a href="#s12">Security</a></li>
+      <li><a href="#s13">Policy Changes</a></li>
+      <li><a href="#s14">Contact Us</a></li>
+    </ol>
+  </aside>
+
+  <!-- POLICY BODY -->
+  <main class="policy-content">
+
+    <div class="info-card accent-green">
+      <p><strong>Plain-English Summary:</strong> StreakForge collects the data you give us (habits, reminders, account details) and limited analytics data to keep the app running well. We never sell your data. You have full rights to access, correct, or delete it at any time.</p>
+    </div>
+
+    <!-- 1 -->
+    <section class="policy-section" id="s1">
+      <div class="section-header">
+        <div class="section-num">01</div>
+        <h2>Who We Are</h2>
+      </div>
+      <p>StreakForge is a habit-tracking mobile application developed and operated by <strong>Future Build Cov Ltd</strong>, a company registered in England and Wales.</p>
+      <p>For the purposes of the UK General Data Protection Regulation (UK GDPR) and the EU General Data Protection Regulation (EU GDPR), Future Build Cov Ltd is the <strong>data controller</strong> for personal data collected through the StreakForge application and associated website.</p>
+      <div class="info-card accent-purple">
+        <p><strong>Registered Office:</strong> Future Build Cov Ltd, Coventry, United Kingdom</p>
+        <p><strong>Data Protection Enquiries:</strong> <a href="mailto:privacy@streakforge.app" style="color:var(--primary-light);text-decoration:none;">privacy@streakforge.app</a></p>
+      </div>
+      <p>This Privacy Policy applies to all users of the StreakForge mobile app (iOS and Android), our website, and any related services we provide.</p>
+    </section>
+
+    <!-- 2 -->
+    <section class="policy-section" id="s2">
+      <div class="section-header">
+        <div class="section-num">02</div>
+        <h2>Data We Collect</h2>
+      </div>
+      <p>We collect personal data in three ways: <strong>data you provide directly</strong>, <strong>data generated by your use of the app</strong>, and <strong>data collected automatically</strong> by technical systems.</p>
+
+      <h3>2.1 Data You Provide</h3>
+      <ul>
+        <li><strong>Account information:</strong> name, email address, and password (stored as a secure hash) when you register for a StreakForge account.</li>
+        <li><strong>Profile preferences:</strong> display name, optional profile photo, and chosen theme or notification preferences.</li>
+        <li><strong>Habit data:</strong> habit names, descriptions, categories, frequency targets, start dates, and any notes you attach to habit entries.</li>
+        <li><strong>Check-in records:</strong> timestamps indicating when you mark a habit as complete each day.</li>
+        <li><strong>Reminder settings:</strong> the times and days you schedule push notification reminders for each habit.</li>
+        <li><strong>Support communications:</strong> any messages, emails, or feedback you send to us.</li>
+      </ul>
+
+      <h3>2.2 Data Generated by Your Use</h3>
+      <ul>
+        <li><strong>Streak data:</strong> calculated current and longest streak counts for each habit.</li>
+        <li><strong>Progress statistics:</strong> completion rates, weekly/monthly summaries, and chart data derived from your check-in records.</li>
+        <li><strong>App interaction data:</strong> features you use, screens you visit within the app, and actions you take (e.g., creating, editing, or archiving a habit).</li>
+      </ul>
+
+      <h3>2.3 Data Collected Automatically</h3>
+      <ul>
+        <li><strong>Device information:</strong> device type, operating system version, app version, and unique device identifiers (e.g., Firebase Installation ID).</li>
+        <li><strong>Log data:</strong> IP address, access timestamps, error logs, and crash reports.</li>
+        <li><strong>Analytics data:</strong> session duration, feature engagement events, and performance metrics collected via Google Analytics for Firebase.</li>
+        <li><strong>Push notification tokens:</strong> a device token used solely to deliver your scheduled habit reminders.</li>
+      </ul>
+
+      <div class="info-card accent-blue">
+        <p><strong>We do not collect:</strong> payment card data (purchases are handled entirely by the Apple App Store or Google Play), precise GPS location, contacts, camera images (unless you voluntarily upload a profile photo), or any sensitive categories of personal data as defined under GDPR Article 9.</p>
+      </div>
+    </section>
+
+    <!-- 3 -->
+    <section class="policy-section" id="s3">
+      <div class="section-header">
+        <div class="section-num">03</div>
+        <h2>How We Use Your Data</h2>
+      </div>
+      <p>We use your personal data only for the purposes described below. We do not use personal data for automated decision-making or profiling that produces significant legal or similarly significant effects on you.</p>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Purpose</th>
+            <th>Data Used</th>
+            <th>Legal Basis</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Create and manage your account</td>
+            <td>Name, email, password hash</td>
+            <td>Contract performance</td>
+          </tr>
+          <tr>
+            <td>Deliver core habit-tracking functionality</td>
+            <td>Habit data, check-in records, streak data</td>
+            <td>Contract performance</td>
+          </tr>
+          <tr>
+            <td>Send habit reminder notifications</td>
+            <td>Reminder settings, push notification token</td>
+            <td>Contract performance / Consent</td>
+          </tr>
+          <tr>
+            <td>Display progress charts and statistics</td>
+            <td>Check-in records, streak data</td>
+            <td>Contract performance</td>
+          </tr>
+          <tr>
+            <td>Improve app performance and fix bugs</td>
+            <td>Crash reports, log data, device information</td>
+            <td>Legitimate interests</td>
+          </tr>
+          <tr>
+            <td>Analyse feature usage and improve UX</td>
+            <td>Analytics events, session data</td>
+            <td>Legitimate interests / Consent</td>
+          </tr>
+          <tr>
+            <td>Respond to support requests</td>
+            <td>Support communications, account info</td>
+            <td>Contract performance / Legitimate interests</td>
+          </tr>
+          <tr>
+            <td>Comply with legal obligations</td>
+            <td>Any relevant data</td>
+            <td>Legal obligation</td>
+          </tr>
+          <tr>
+            <td>Send optional product updates and tips (if opted in)</td>
+            <td>Email address</td>
+            <td>Consent</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 4 -->
+    <section class="policy-section" id="s4">
+      <div class="section-header">
+        <div class="section-num">04</div>
+        <h2>Legal Bases for Processing (GDPR Articles 13 &amp; 14)</h2>
+      </div>
+      <p>Under the UK GDPR and EU GDPR, we rely on the following legal bases to process your personal data:</p>
+
+      <h3>4.1 Contract Performance (Article 6(1)(b))</h3>
+      <p>Processing is necessary to perform the contract we have with you — i.e., to provide the StreakForge app and its core features including habit tracking, streaks, reminders, and progress charts. Without this processing, we cannot deliver the service.</p>
+
+      <h3>4.2 Legitimate Interests (Article 6(1)(f))</h3>
+      <p>We process certain data based on our legitimate interests, where these are not overridden by your rights. These interests include:</p>
+      <ul>
+        <li>Maintaining the security and integrity of our systems</li>
+        <li>Investigating and resolving technical errors and crashes</li>
+        <li>Understanding aggregate usage patterns to improve the app</li>
+        <li>Preventing fraud or misuse of the service</li>
+      </ul>
+      <p>When relying on legitimate interests, we have conducted a balancing test and concluded that our interests do not outweigh your fundamental rights and freedoms. You may object to this processing at any time (see Section 10).</p>
+
+      <h3>4.3 Consent (Article 6(1)(a))</h3>
+      <p>Where we rely on your consent — for example, to send marketing emails or to set non-essential analytics cookies — we will ask you clearly before collecting or using such data. You may withdraw consent at any time without affecting the lawfulness of prior processing.</p>
+
+      <h3>4.4 Legal Obligation (Article 6(1)(c))</h3>
+      <p>We may process personal data where necessary to comply with applicable legal obligations, including tax law, data breach notification requirements, and court orders.</p>
+
+      <div class="info-card accent-purple">
+        <p><strong>Source of data (Article 14):</strong> Where we collect data other than directly from you (e.g., analytics data collected automatically when you use the app), we inform you through this Privacy Policy at the point of first use of the application, and via in-app consent prompts where required.</p>
+      </div>
+    </section>
+
+    <!-- 5 -->
+    <section class="policy-section" id="s5">
+      <div class="section-header">
+        <div class="section-num">05</div>
+        <h2>Cookies &amp; Tracking Technologies</h2>
+      </div>
+      <p>StreakForge uses cookies and similar tracking technologies on our website and within the app environment. Below is a full breakdown:</p>
+
+      <h3>5.1 Strictly Necessary Cookies</h3>
+      <p>These are essential for the website and app to function. They enable core features such as authentication sessions and security tokens. These cannot be switched off. No consent is required for these.</p>
+
+      <h3>5.2 Analytics Cookies &amp; SDKs</h3>
+      <p>We use <strong>Google Analytics for Firebase</strong> to understand how users interact with the app. This SDK sets identifiers on your device to track session data, feature usage events, and crash diagnostics. These are only activated after you have provided consent through our in-app consent banner on first launch.</p>
+
+      <h3>5.3 Firebase Performance Monitoring</h3>
+      <p>Firebase Performance Monitoring collects app start times, HTTP/S network request rates, and other performance data to help us identify and fix bottlenecks. This is categorised as functional/performance tracking and is covered under legitimate interests, though you may opt out via app settings.</p>
+
+      <h3>5.4 Managing Your Preferences</h3>
+      <p>You can manage cookie and tracking preferences at any time:</p>
+      <ul>
+        <li>Via the <strong>Privacy Settings</strong> screen within the StreakForge app</li>
+        <li>By adjusting your device's advertising identifier settings (iOS: Settings → Privacy → Tracking; Android: Settings → Google → Ads)</li>
+        <li>By emailing <a href="mailto:privacy@streakforge.app" style="color:var(--primary-light);">privacy@streakforge.app</a> to request opt-out</li>
+      </ul>
+      <p>Withdrawing consent for analytics cookies will not affect your ability to use the core habit-tracking features of StreakForge.</p>
+    </section>
+
+    <!-- 6 -->
+    <section class="policy-section" id="s6">
+      <div class="section-header">
+        <div class="section-num">06</div>
+        <h2>Third-Party Services</h2>
+      </div>
+      <p>We use a small number of carefully selected third-party services to operate StreakForge. Each processes personal data on our behalf as a <strong>data processor</strong> under a Data Processing Agreement, or as an independent data controller for their own purposes.</p>
+
+      <h3>6.1 Google Firebase (Google LLC)</h3>
+      <p><strong>Purpose:</strong> Backend infrastructure — authentication, cloud database (Firestore), cloud storage, push notifications (Firebase Cloud Messaging), crash reporting (Crashlytics), and analytics.</p>
+      <p><strong>Data transferred:</strong> Account credentials (hashed), habit data, device identifiers, session events, crash logs.</p>
+      <p><strong>Data controller/processor:</strong> Google acts as a data processor for Firebase infrastructure services. For Google Analytics for Firebase, Google may also act as an independent controller.</p>
+      <p><strong>Privacy Policy:</strong> <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" style="color:var(--primary-light);">https://policies.google.com/privacy</a></p>
+      <p><strong>Data location:</strong> Primarily European data centres where EU Standard Contractual Clauses (SCCs) are in place.</p>
+
+      <h3>6.2 Google Analytics for Firebase</h3>
+      <p><strong>Purpose:</strong> Measuring app engagement, user retention, feature adoption, and funnel analysis to improve the product.</p>
+      <p><strong>Data transferred:</strong> Pseudonymised device identifiers, event names and parameters (e.g., "habit_created", "streak_reached"), session duration, country-level location (not precise GPS).</p>
+      <p><strong>Opt-out:</strong> You can disable Google Analytics data collection in app Privacy Settings. You may also opt out via Google's own tools at <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer" style="color:var(--primary-light);">https://tools.google.com/dlpage/gaoptout</a>.</p>
+
+      <h3>6.3 Apple App Store / Google Play</h3>
+      <p><strong>Purpose:</strong> App distribution and in-app purchase processing.</p>
+      <p><strong>Data transferred:</strong> Purchase receipts and transaction identifiers only. We do not receive your full payment card details.</p>
+      <p>Apple and Google are independent data controllers for their own platform data. Please refer to their respective privacy policies for details.</p>
+
+      <h3>6.4 Email Service Provider</h3>
+      <p>If you opt in to email communications, we use a reputable email service provider to send transactional and optional marketing emails. Only your email address and first name (if provided) are shared for this purpose, under a Data Processing Agreement.</p>
+
+      <div class="info-card accent-green">
+        <p><strong>We do not use:</strong> advertising networks, data brokers, or any third-party services that track you across other apps or websites for advertising purposes.</p>
+      </div>
+    </section>
+
+    <!-- 7 -->
+    <section class="policy-section" id="s7">
+      <div class="section-header">
+        <div class="section-num">07</div>
+        <h2>Data Sharing &amp; Disclosure</h2>
+      </div>
+      <p>We do not sell, rent, or trade your personal data to any third party. We share data only in the following limited circumstances:</p>
+      <ul>
+        <li><strong>Service providers:</strong> Third-party processors listed in Section 6, acting under binding Data Processing Agreements.</li>
+        <li><strong>Legal requirements:</strong> Where we are legally required to disclose data by law, court order, or regulatory authority (e.g., HMRC, ICO).</li>
+        <li><strong>Protection of rights:</strong> Where disclosure is necessary to protect the rights, property, or safety of Future Build Cov Ltd, our users, or others.</li>
+        <li><strong>Business transfer:</strong> In the event of a merger, acquisition, or sale of all or part of our business, your data may be transferred as part of that transaction. We will notify you before your data is transferred and becomes subject to a different privacy policy.</li>
+        <li><strong>With your explicit consent:</strong> For any other purpose not described here, we will ask your permission first.</li>
+      </ul>
+    </section>
+
+    <!-- 8 -->
+    <section class="policy-section" id="s8">
+      <div class="section-header">
+        <div class="section-num">08</div>
+        <h2>International Data Transfers</h2>
+      </div>
+      <p>Future Build Cov Ltd is based in the United Kingdom. Some of our service providers, including Google Firebase, operate infrastructure in countries outside the UK and European Economic Area (EEA), including the United States.</p>
+      <p>When we transfer personal data outside the UK or EEA, we ensure appropriate safeguards are in place, including:</p>
+      <ul>
+        <li><strong>UK International Data Transfer Agreements (IDTAs)</strong> or <strong>EU Standard Contractual Clauses (SCCs)</strong> with our processors.</li>
+        <li>Transfers to countries that have received an adequacy decision from the UK Secretary of State or the European Commission.</li>
+        <li>Binding Corporate Rules where applicable.</li>
+      </ul>
+      <p>You may request a copy of the relevant transfer safeguards by contacting us at <a href="mailto:privacy@streakforge.app" style="color:var(--primary-light);">privacy@streakforge.app</a>.</p>
+    </section>
+
+    <!-- 9 -->
+    <section class="policy-section" id="s9">
+      <div class="section-header">
+        <div class="section-num">09</div>
+        <h2>Data Retention</h2>
+      </div>
+      <p>We retain your personal data only for as long as necessary for the purposes described in this policy, or as required by applicable law.</p>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Data Type</th>
+            <th>Retention Period</th>
+            <th>Reason</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Account and profile data</td>
+            <td>Until account deletion + 30 days</td>
+            <td>Service delivery; grace period for recovery</td>
+          </tr>
+          <tr>
+            <td>Habit records and check-in data</td>
+            <td>Until account deletion + 30 days</td>
+            <td>Core service feature; user-owned data</td>
+          </tr>
+          <tr>
+            <td>Reminder/notification settings</td>
+            <td>Until changed or account deleted</td>
+            <td>Service delivery</td>
+          </tr>
+          <tr>
+            <td>Analytics and usage events</td>
+            <td>14 months (Firebase default)</td>
+            <td>Trend analysis; product improvement</td>
+          </tr>
+          <tr>
+            <td>Crash reports and logs</td>
+            <td>90 days</td>
+            <td>Bug diagnosis and resolution</td>
+          </tr>
+          <tr>
+            <td>Support communications</td>
+            <td>3 years from resolution</td>
+            <td>Legal defence; service quality records</td>
+          </tr>
+          <tr>
+            <td>Financial/transaction records</td>
+            <td>7 years</td>
+            <td>UK tax and accounting law requirement</td>
+          </tr>
+          <tr>
+            <td>Consent records</td>
+            <td>3 years from consent or withdrawal</td>
+            <td>Compliance with GDPR accountability obligations</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>When data reaches the end of its retention period, it is securely deleted or permanently anonymised. Anonymised, aggregated data (which cannot identify you) may be retained indefinitely for statistical purposes.</p>
+      <p>You may request deletion of your account and all associated personal data at any time — see Section 10 for details.</p>
+    </section>
+
+    <!-- 10 -->
+    <section class="policy-section" id="s10">
+      <div class="section-header">
+        <div class="section-num">10</div>
+        <h2>Your Rights Under GDPR</h2>
+      </div>
+      <p>Under the UK GDPR and EU GDPR, you have the following rights regarding your personal data. We respond to all verifiable requests within <strong>30 days</strong> (extendable by two further months for complex requests, with notice).</p>
+
+      <div class="rights-grid">
+        <div class="right-card">
+          <span class="right-icon">👁️</span>
+          <h4>Right of Access</h4>
+          <p>Request a copy of all personal data we hold about you (Article 15).</p>
+        </div>
+        <div class="right-card">
+          <span class="right-icon">✏️</span>
+          <h4>Right to Rectification</h4>
+          <p>Ask us to correct inaccurate or incomplete personal data (Article 16).</p>
+        </div>
+        <div class="right-card">
+          <span class="right-icon">🗑️</span>
+          <h4>Right to Erasure</h4>
+          <p>Request deletion of your data where no legitimate grounds to retain it exist (Article 17).</p>
+        </div>
+        <div class="right-card">
+          <span class="right-icon">🔒</span>
+          <h4>Right to Restriction</h4>
+          <p>Ask us to restrict processing while a dispute or query is resolved (Article 18).</p>
+        </div>
+        <div class="right-card">
+          <span class="right-icon">📦</span>
+          <h4>Data Portability</h4>
+          <p>Receive your data in a structured, machine-readable format (Article 20).</p>
+        </div>
+        <div class="right-card">
+          <span class="right-icon">🚫</span>
+          <h4>Right to Object</h4>
+          <p>Object to processing based on legitimate interests or for direct marketing (Article 21).</p>
+        </div>
+        <div class="right-card">
+          <span class="right-icon">🤖</span>
+          <h4>Automated Decisions</h4>
+          <p>Not to be subject to solely automated decisions with significant effects (Article 22).</p>
+        </div>
+        <div class="right-card">
+          <span class="right-icon">↩️</span>
+          <h4>Withdraw Consent</h4>
+          <p>Withdraw any consent you have given at any time, without detriment (Article 7).</p>
+        </div>
+      </div>
+
+      <h3>How to Exercise Your Rights</h3>
+      <p>To exercise any of these rights, you can:</p>
+      <ul>
+        <li>Use the <strong>Privacy &amp; Data</strong> section within the StreakForge app settings to export or delete your habit data directly.</li>
+        <li>Email us at <a href="mailto:privacy@streakforge.app" style="color:var(--primary-light);">privacy@streakforge.app</a> with the subject line "Data Rights Request" and a description of your request.</li>
+        <li>Submit a request via our contact form at <a href="contact.html" style="color:var(--primary-light);">streakforge.app/contact</a>.</li>
+      </ul>
+      <p>We may ask you to verify your identity before processing a request. There is no fee for exercising your rights, except in cases of manifestly unfounded or excessive requests, where we may charge a reasonable administrative fee or decline to act.</p>
+
+      <h3>Right to Lodge a Complaint</h3>
+      <p>If you believe we have not handled your personal data in accordance with applicable data protection law, you have the right to lodge a complaint with the <strong>Information Commissioner's Office (ICO)</strong>, the UK's supervisory authority:</p>
+      <div class="info-card accent-blue">
+        <p><strong>Information Commissioner's Office</strong><br/>
+        Website: <a href="https://ico.org.uk" target="_blank" rel="noopener noreferrer" style="color:var(--primary-light);">ico.org.uk</a><br/>
+        Helpline: 0303 123 1113</p>
+        <p>If you are in the EU, you may also lodge a complaint with your local Data Protection Authority.</p>
+      </div>
+      <p>We would always appreciate the opportunity to resolve your concern directly before you escalate to a supervisory authority — please contact us first.</p>
+    </section>
+
+    <!-- 11 -->
+    <section class="policy-section" id="s11">
+      <div class="section-header">
+        <div class="section-num">11</div>
+        <h2>Children's Privacy</h2>
+      </div>
+      <p>StreakForge is not directed at children under the age of <strong>13</strong>, and we do not knowingly collect personal data from children under 13. If you are between 13 and 16 years old and located in the EU, you should obtain parental consent before using StreakForge, in accordance with applicable data protection laws.</p>
+      <p>If we become aware that we have inadvertently collected personal data from a child under the age of 13 without verifiable parental consent, we will take immediate steps to delete that data. If you believe we may have collected data from a child, please contact us at <a href="mailto:privacy@streakforge.app" style="color:var(--primary-light);">privacy@streakforge.app</a>.</p>
+    </section>
+
+    <!-- 12 -->
+    <section class="policy-section" id="s12">
+      <div class="section-header">
+        <div class="section-num">12</div>
+        <h2>Security</h2>
+      </div>
+      <p>We take the security of your personal data seriously and implement appropriate technical and organisational measures to protect it against unauthorised access, loss, alteration, or disclosure. Our security measures include:</p>
+      <ul>
+        <li><strong>Encryption in transit:</strong> All data transmitted between your device and our servers is encrypted using TLS 1.2 or higher.</li>
+        <li><strong>Encryption at rest:</strong> Data stored in Firebase Firestore and Cloud Storage is encrypted at rest by Google's infrastructure.</li>
+        <li><strong>Authentication:</strong> Firebase Authentication with secure password hashing (bcrypt); support for multi-factor authentication.</li>
+        <li><strong>Access controls:</strong> Firestore security rules ensure that users can only access their own data. Administrative access to production data is limited to authorised personnel only.</li>
+        <li><strong>Regular security reviews:</strong> We periodically review and update our security practices and conduct vulnerability assessments.</li>
+        <li><strong>Incident response:</strong> We have a documented data breach response procedure. In the event of a personal data breach that poses a risk to your rights, we will notify the ICO within 72 hours and affected users without undue delay, as required by GDPR Article 33/34.</li>
+      </ul>
+      <p>While we take all reasonable steps to protect your data, no method of transmission or storage is 100% secure. You are responsible for keeping your account credentials confidential and notifying us immediately if you suspect any unauthorised access to your account.</p>
+    </section>
+
+    <!-- 13 -->
+    <section class="policy-section" id="s13">
+      <div class="section-header">
+        <div class="section-num">13</div>
+        <h2>Changes to This Policy</h2>
+      </div>
+      <p>We may update this Privacy Policy from time to time to reflect changes in our practices, technology, legal requirements, or for other operational reasons. When we make significant changes, we will:</p>
+      <ul>
+        <li>Update the <strong>Effective Date</strong> at the top of this page.</li>
+        <li>Display a prominent notice within the StreakForge app at next login.</li>
+        <li>Send an email notification to registered users (where the change materially affects how we use their data).</li>
+      </ul>
+      <p>We encourage you to review this policy periodically. Your continued use of StreakForge after the effective date of a revised policy constitutes your acceptance of the changes, to the extent permitted by applicable law. Where the changes require fresh consent, we will request it explicitly.</p>
+      <p>Previous versions of this policy are available on request by emailing <a href="mailto:privacy@streakforge.app" style="color:var(--primary-light);">privacy@streakforge.app</a>.</p>
+    </section>
+
+    <!-- 14 -->
+    <section class="policy-section" id="s14">
+      <div class="section-header">
+        <div class="section-num">14</div>
+        <h2>Contact Us</h2>
+      </div>
+      <p>If you have any questions, concerns, or requests relating to this Privacy Policy or our data processing activities, please get in touch. We are committed to handling all privacy enquiries promptly and transparently.</p>
+
+      <div class="contact-box">
+        <h3>Future Build Cov Ltd – Data Protection</h3>
+        <p><strong>Email:</strong> <a href="mailto:privacy@streakforge.app">privacy@streakforge.app</a></p>
+        <p><strong>Subject line for data requests:</strong> "Data Rights Request – [Your Name]"</p>
+        <p><strong>General contact form:</strong> <a href="contact.html">streakforge.app/contact</a></p>
+        <p><strong>Postal address:</strong> Data Protection, Future Build Cov Ltd, Coventry, United Kingdom</p>
+        <p style="margin-top:14px;font-size:0.85rem;color:var(--text-sec);">We aim to respond to all enquiries within <strong style="color:var(--text);">5 business days</strong> and to fulfil all verified data rights requests within <strong style="color:var(--text);">30 days</strong>.</p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="text-decoration:none;">
+          <div class="logo-mark">
+            <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 2C10 2 5 7 5 11.5C5 14.5 7.2 17 10 17C12.8 17 15 14.5 15 11.5C15 7 10 2 10 2Z" fill="url(#flame2)" />
+              <path d="M10 8C10 8 7.5 10.5 7.5 12.5C7.5 13.9 8.6 15 10 15C11.4 15 12.5 13.9 12.5 12.5C12.5 10.5 10 8 10 8Z" fill="rgba(255,255,255,0.25)" />
+              <defs>
+                <linearGradient id="flame2" x1="10" y1="2" x2="10" y2="17" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#10B981"/>
+                  <stop offset="100%" stop-color="#7C3AED"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <span class="logo-name">StreakForge</span>
+        </a>
+        <p>Build habits. Break limits. Every single day.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="index.html#features">Features</a></li>
+          <li><a href="index.html#how-it-works">How It Works</a></li>
+          <li><a href="index.html#pricing">Pricing</a></li>
+          <li><a href="#">Download App</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Service</a></li>
+          <li><a href="contact.html">Cookie Settings</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Support</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Future Build Cov Ltd. Registered in England &amp; Wales. All rights reserved.</p>
+      <p><a href="privacy.html">Privacy</a> &nbsp;·&nbsp; <a href="terms.html">Terms</a> &nbsp;·&nbsp; <a href="contact.html">Contact</a></p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+  });
+</script>
+
+</body>
+</html>

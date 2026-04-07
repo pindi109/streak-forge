@@ -1,38 +1,52 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+enum HabitFrequency { daily, weekly }
+
+enum HabitCategory {
+  health,
+  fitness,
+  mindfulness,
+  productivity,
+  learning,
+  social,
+  finance,
+  other,
+}
 
 class HabitModel {
   final String id;
   final String userId;
   final String title;
   final String description;
+  final HabitFrequency frequency;
+  final HabitCategory category;
   final String emoji;
-  final String category;
-  final String frequency;
-  final List<int> weekDays;
-  final String? reminderTime;
+  final int targetDays;
+  final List<String> completedDates;
   final int currentStreak;
   final int longestStreak;
-  final int totalCompletions;
-  final bool isArchived;
   final DateTime createdAt;
-  final List<DateTime> completedDates;
+  final DateTime? reminderTime;
+  final bool reminderEnabled;
+  final String colorHex;
 
   const HabitModel({
     required this.id,
     required this.userId,
     required this.title,
-    this.description = '',
-    required this.emoji,
+    required this.description,
+    required this.frequency,
     required this.category,
-    this.frequency = 'daily',
-    this.weekDays = const [0, 1, 2, 3, 4, 5, 6],
-    this.reminderTime,
-    this.currentStreak = 0,
-    this.longestStreak = 0,
-    this.totalCompletions = 0,
-    this.isArchived = false,
+    required this.emoji,
+    required this.targetDays,
+    required this.completedDates,
+    required this.currentStreak,
+    required this.longestStreak,
     required this.createdAt,
-    this.completedDates = const [],
+    this.reminderTime,
+    required this.reminderEnabled,
+    required this.colorHex,
   });
 
   factory HabitModel.fromFirestore(DocumentSnapshot doc) {
@@ -42,19 +56,23 @@ class HabitModel {
       userId: data['userId'] ?? '',
       title: data['title'] ?? '',
       description: data['description'] ?? '',
-      emoji: data['emoji'] ?? '💪',
-      category: data['category'] ?? 'Other',
-      frequency: data['frequency'] ?? 'daily',
-      weekDays: List<int>.from(data['weekDays'] ?? [0, 1, 2, 3, 4, 5, 6]),
-      reminderTime: data['reminderTime'],
+      frequency: HabitFrequency.values.firstWhere(
+        (e) => e.name == (data['frequency'] ?? 'daily'),
+        orElse: () => HabitFrequency.daily,
+      ),
+      category: HabitCategory.values.firstWhere(
+        (e) => e.name == (data['category'] ?? 'other'),
+        orElse: () => HabitCategory.other,
+      ),
+      emoji: data['emoji'] ?? '✅',
+      targetDays: data['targetDays'] ?? 30,
+      completedDates: List<String>.from(data['completedDates'] ?? []),
       currentStreak: data['currentStreak'] ?? 0,
       longestStreak: data['longestStreak'] ?? 0,
-      totalCompletions: data['totalCompletions'] ?? 0,
-      isArchived: data['isArchived'] ?? false,
       createdAt: (data['createdAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
-      completedDates: (data['completedDates'] as List<dynamic>? ?? [])
-          .map((e) => (e as Timestamp).toDate())
-          .toList(),
+      reminderTime: (data['reminderTime'] as Timestamp?)?.toDate(),
+      reminderEnabled: data['reminderEnabled'] ?? false,
+      colorHex: data['colorHex'] ?? '#7C3AED',
     );
   }
 
@@ -63,18 +81,18 @@ class HabitModel {
       'userId': userId,
       'title': title,
       'description': description,
+      'frequency': frequency.name,
+      'category': category.name,
       'emoji': emoji,
-      'category': category,
-      'frequency': frequency,
-      'weekDays': weekDays,
-      'reminderTime': reminderTime,
+      'targetDays': targetDays,
+      'completedDates': completedDates,
       'currentStreak': currentStreak,
       'longestStreak': longestStreak,
-      'totalCompletions': totalCompletions,
-      'isArchived': isArchived,
       'createdAt': Timestamp.fromDate(createdAt),
-      'completedDates':
-          completedDates.map((d) => Timestamp.fromDate(d)).toList(),
+      'reminderTime':
+          reminderTime != null ? Timestamp.fromDate(reminderTime!) : null,
+      'reminderEnabled': reminderEnabled,
+      'colorHex': colorHex,
     };
   }
 
@@ -83,34 +101,56 @@ class HabitModel {
     String? userId,
     String? title,
     String? description,
+    HabitFrequency? frequency,
+    HabitCategory? category,
     String? emoji,
-    String? category,
-    String? frequency,
-    List<int>? weekDays,
-    String? reminderTime,
+    int? targetDays,
+    List<String>? completedDates,
     int? currentStreak,
     int? longestStreak,
-    int? totalCompletions,
-    bool? isArchived,
     DateTime? createdAt,
-    List<DateTime>? completedDates,
+    DateTime? reminderTime,
+    bool? reminderEnabled,
+    String? colorHex,
   }) {
     return HabitModel(
       id: id ?? this.id,
       userId: userId ?? this.userId,
       title: title ?? this.title,
       description: description ?? this.description,
-      emoji: emoji ?? this.emoji,
-      category: category ?? this.category,
       frequency: frequency ?? this.frequency,
-      weekDays: weekDays ?? this.weekDays,
-      reminderTime: reminderTime ?? this.reminderTime,
+      category: category ?? this.category,
+      emoji: emoji ?? this.emoji,
+      targetDays: targetDays ?? this.targetDays,
+      completedDates: completedDates ?? this.completedDates,
       currentStreak: currentStreak ?? this.currentStreak,
       longestStreak: longestStreak ?? this.longestStreak,
-      totalCompletions: totalCompletions ?? this.totalCompletions,
-      isArchived: isArchived ?? this.isArchived,
       createdAt: createdAt ?? this.createdAt,
-      completedDates: completedDates ?? this.completedDates,
+      reminderTime: reminderTime ?? this.reminderTime,
+      reminderEnabled: reminderEnabled ?? this.reminderEnabled,
+      colorHex: colorHex ?? this.colorHex,
     );
+  }
+
+  bool isCompletedToday() {
+    final today = _dateString(DateTime.now());
+    return completedDates.contains(today);
+  }
+
+  bool isCompletedOnDate(DateTime date) {
+    return completedDates.contains(_dateString(date));
+  }
+
+  double get completionRate {
+    if (targetDays == 0) return 0;
+    final daysSinceCreation =
+        DateTime.now().difference(createdAt).inDays + 1;
+    final totalDays = daysSinceCreation < targetDays ? daysSinceCreation : targetDays;
+    if (totalDays == 0) return 0;
+    return (completedDates.length / totalDays).clamp(0.0, 1.0);
+  }
+
+  static String _dateString(DateTime date) {
+    return '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
   }
 }

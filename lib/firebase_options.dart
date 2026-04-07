@@ -29,19 +29,19 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCtJ4j5u8SMQovzvG9bH-5SAq3RBbujp68',
-    appId: '1:36498065610:android:b1cb8613114387a3facc33',
-    messagingSenderId: '36498065610',
-    projectId: 'streak-forge-567485',
-    storageBucket: 'streak-forge-567485.appspot.com',
+    apiKey: 'AIzaSyDX71FGARQ16cCaZU7Q2kumv6gqQYrZL-M',
+    appId: '1:494877238884:android:9299b8a990d2be72626171',
+    messagingSenderId: '494877238884',
+    projectId: 'streak-forge-569277',
+    storageBucket: 'streak-forge-569277.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCtJ4j5u8SMQovzvG9bH-5SAq3RBbujp68',
-    appId: '1:36498065610:ios:b5ba907b91d79257facc33',
-    messagingSenderId: '36498065610',
-    projectId: 'streak-forge-567485',
-    storageBucket: 'streak-forge-567485.appspot.com',
+    apiKey: 'AIzaSyDX71FGARQ16cCaZU7Q2kumv6gqQYrZL-M',
+    appId: '1:494877238884:ios:81275449d5e8dc52626171',
+    messagingSenderId: '494877238884',
+    projectId: 'streak-forge-569277',
+    storageBucket: 'streak-forge-569277.appspot.com',
     iosClientId: '',
     iosBundleId: 'com.futurebuild.streakforge',
   );

@@ -1,8 +1,8 @@
 # StreakForge
 
-> Build habits. Forge your future daily.
+> Build habits. Break limits. Every single day.
 
-StreakForge speaks to ambitious self-improvers who treat personal growth like a craft — disciplined, data-driven, and relentless. The brand tone is motivational yet minimal, cutting through noise with clean visuals and purposeful feedback loops. It targets 18–35 year old professionals and students who want visible proof of their daily consistency.
+StreakForge speaks to driven self-improvers and productivity enthusiasts who want tangible proof of their daily consistency. The brand is focused, empowering, and quietly intense — like a personal coach who celebrates your wins without the fluff. It blends the precision of data with the warmth of personal growth.
 
 ## Description
 Build a habit tracker app with daily streaks, reminders and progress charts

@@ -1,65 +1,96 @@
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../../../core/constants/app_constants.dart';
 
 class AuthService {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final FirebaseAuth      _auth      = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final GoogleSignIn      _googleSignIn = GoogleSignIn();
 
-  User? get currentUser => _auth.currentUser;
+  // ── Stream ────────────────────────────────────────────────────────────────────
+
   Stream<User?> get authStateChanges => _auth.authStateChanges();
 
-  Future<UserCredential> signInWithEmailAndPassword(
-      String email, String password) async {
+  User? get currentUser => _auth.currentUser;
+
+  // ── Email & Password ──────────────────────────────────────────────────────────
+
+  Future<User?> signInWithEmail({
+    required String email,
+    required String password,
+  }) async {
     try {
       final credential = await _auth.signInWithEmailAndPassword(
-        email: email.trim(),
+        email: email,
         password: password,
       );
-      return credential;
+      return credential.user;
     } on FirebaseAuthException catch (e) {
-      throw _handleAuthException(e);
+      throw _handleFirebaseAuthException(e);
+    } catch (e) {
+      throw AppConstants.errGeneric;
     }
   }
 
-  Future<UserCredential> registerWithEmailAndPassword(
-      String email, String password, String displayName) async {
+  Future<User?> registerWithEmail({
+    required String email,
+    required String password,
+    required String displayName,
+  }) async {
     try {
       final credential = await _auth.createUserWithEmailAndPassword(
-        email: email.trim(),
+        email: email,
         password: password,
       );
-      await credential.user?.updateDisplayName(displayName);
-      await _createUserDocument(credential.user!, displayName);
-      return credential;
+
+      final user = credential.user;
+      if (user != null) {
+        await user.updateDisplayName(displayName);
+        await _createUserDocument(user, displayName: displayName);
+      }
+
+      return user;
     } on FirebaseAuthException catch (e) {
-      throw _handleAuthException(e);
+      throw _handleFirebaseAuthException(e);
+    } catch (e) {
+      throw AppConstants.errGeneric;
     }
   }
 
-  Future<UserCredential?> signInWithGoogle() async {
+  // ── Google Sign-In ────────────────────────────────────────────────────────────
+
+  Future<User?> signInWithGoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
       if (googleUser == null) return null;
 
       final GoogleSignInAuthentication googleAuth =
           await googleUser.authentication;
+
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
+
       final userCredential = await _auth.signInWithCredential(credential);
-      final isNewUser = userCredential.additionalUserInfo?.isNewUser ?? false;
-      if (isNewUser) {
-        await _createUserDocument(
-            userCredential.user!, userCredential.user!.displayName ?? 'User');
+      final user = userCredential.user;
+
+      if (user != null && userCredential.additionalUserInfo?.isNewUser == true) {
+        await _createUserDocument(user);
       }
-      return userCredential;
+
+      return user;
     } on FirebaseAuthException catch (e) {
-      throw _handleAuthException(e);
+      throw _handleFirebaseAuthException(e);
+    } catch (e) {
+      throw AppConstants.errGoogleSignIn;
     }
   }
+
+  // ── Sign Out ──────────────────────────────────────────────────────────────────
 
   Future<void> signOut() async {
     try {
@@ -68,56 +99,117 @@ class AuthService {
         _googleSignIn.signOut(),
       ]);
     } catch (e) {
-      rethrow;
+      throw AppConstants.errGeneric;
     }
   }
 
-  Future<void> _createUserDocument(User user, String displayName) async {
-    try {
-      await _firestore.collection('users').doc(user.uid).set({
-        'uid': user.uid,
-        'email': user.email,
-        'displayName': displayName,
-        'photoUrl': user.photoURL,
-        'createdAt': FieldValue.serverTimestamp(),
-        'totalHabits': 0,
-        'totalStreaks': 0,
-      }, SetOptions(merge: true));
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  String _handleAuthException(FirebaseAuthException e) {
-    switch (e.code) {
-      case 'user-not-found':
-        return 'No user found with this email.';
-      case 'wrong-password':
-        return 'Incorrect password. Please try again.';
-      case 'email-already-in-use':
-        return 'This email is already registered.';
-      case 'invalid-email':
-        return 'Please enter a valid email address.';
-      case 'weak-password':
-        return 'Password must be at least 6 characters.';
-      case 'operation-not-allowed':
-        return 'This sign-in method is not enabled.';
-      case 'user-disabled':
-        return 'This account has been disabled.';
-      case 'too-many-requests':
-        return 'Too many attempts. Please try again later.';
-      case 'network-request-failed':
-        return 'Network error. Check your connection.';
-      default:
-        return e.message ?? 'An unexpected error occurred.';
-    }
-  }
+  // ── Password Reset ────────────────────────────────────────────────────────────
 
   Future<void> sendPasswordResetEmail(String email) async {
     try {
-      await _auth.sendPasswordResetEmail(email: email.trim());
+      await _auth.sendPasswordResetEmail(email: email);
     } on FirebaseAuthException catch (e) {
-      throw _handleAuthException(e);
+      throw _handleFirebaseAuthException(e);
+    } catch (e) {
+      throw AppConstants.errGeneric;
     }
   }
+
+  // ── Delete Account ────────────────────────────────────────────────────────────
+
+  Future<void> deleteAccount() async {
+    try {
+      final user = _auth.currentUser;
+      if (user == null) return;
+
+      // Delete Firestore data first
+      await _firestore
+          .collection(AppConstants.colUsers)
+          .doc(user.uid)
+          .delete();
+
+      await user.delete();
+    } on FirebaseAuthException catch (e) {
+      throw _handleFirebaseAuthException(e);
+    } catch (e) {
+      throw AppConstants.errGeneric;
+    }
+  }
+
+  // ── Firestore User Document ───────────────────────────────────────────────────
+
+  Future<void> _createUserDocument(
+    User user, {
+    String? displayName,
+  }) async {
+    try {
+      final docRef = _firestore
+          .collection(AppConstants.colUsers)
+          .doc(user.uid);
+
+      final docSnapshot = await docRef.get();
+      if (!docSnapshot.exists) {
+        await docRef.set({
+          AppConstants.fieldId:          user.uid,
+          AppConstants.fieldEmail:        user.email ?? '',
+          AppConstants.fieldDisplayName:  displayName ?? user.displayName ?? '',
+          AppConstants.fieldPhotoUrl:     user.photoURL ?? '',
+          AppConstants.fieldCreatedAt:    FieldValue.serverTimestamp(),
+          AppConstants.fieldUpdatedAt:    FieldValue.serverTimestamp(),
+          'habitCount':                   0,
+          'totalCompletions':             0,
+          'longestStreak':                0,
+        });
+      }
+    } catch (e) {
+      // Non-fatal: user can still proceed without Firestore doc
+      debugPrint('Failed to create user document: $e');
+    }
+  }
+
+  Future<void> updateFcmToken(String token) async {
+    try {
+      final user = _auth.currentUser;
+      if (user == null) return;
+      await _firestore
+          .collection(AppConstants.colUsers)
+          .doc(user.uid)
+          .update({AppConstants.fieldFcmToken: token});
+    } catch (e) {
+      debugPrint('Failed to update FCM token: $e');
+    }
+  }
+
+  // ── Error Handling ────────────────────────────────────────────────────────────
+
+  String _handleFirebaseAuthException(FirebaseAuthException e) {
+    switch (e.code) {
+      case 'user-not-found':
+        return AppConstants.errUserNotFound;
+      case 'wrong-password':
+        return AppConstants.errWrongPassword;
+      case 'email-already-in-use':
+        return AppConstants.errEmailInUse;
+      case 'weak-password':
+        return AppConstants.errWeakPassword;
+      case 'invalid-email':
+        return AppConstants.errEmailInvalid;
+      case 'too-many-requests':
+        return 'Too many attempts. Please try again later.';
+      case 'user-disabled':
+        return 'This account has been disabled.';
+      case 'network-request-failed':
+        return AppConstants.errNetworkTimeout;
+      case 'invalid-credential':
+        return 'Invalid credentials. Please check your email and password.';
+      default:
+        return e.message ?? AppConstants.errGeneric;
+    }
+  }
+}
+
+// ignore_for_file: avoid_print
+void debugPrint(String message) {
+  // ignore: avoid_print
+  print('[AuthService] $message');
 }

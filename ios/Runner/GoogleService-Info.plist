@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyCtJ4j5u8SMQovzvG9bH-5SAq3RBbujp68</string>
+	<string>AIzaSyDX71FGARQ16cCaZU7Q2kumv6gqQYrZL-M</string>
 	<key>GCM_SENDER_ID</key>
-	<string>36498065610</string>
+	<string>494877238884</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.futurebuild.streakforge</string>
 	<key>PROJECT_ID</key>
-	<string>streak-forge-567485</string>
+	<string>streak-forge-569277</string>
 	<key>STORAGE_BUCKET</key>
-	<string>streak-forge-567485.appspot.com</string>
+	<string>streak-forge-569277.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false/>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true/>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:36498065610:ios:b5ba907b91d79257facc33</string>
+	<string>1:494877238884:ios:81275449d5e8dc52626171</string>
 </dict>
 </plist>
